@@ -24,9 +24,25 @@ function update(){
 } 
 
 
+function checkCollision(){
+    let left = ballPosition.x;
+    let right = ballPosition.x + BALL_SIZE;
+    let top = ballPosition.y;
+    let bottom = ballPosition.y + BALL_SIZE; 
+
+    if(left < 0 || right > width){
+    xSpeed = -xSpeed;
+    }
+    if(top < 0 || bottom > height){
+    ySpeed = -ySpeed;
+    }
+}
+
+
 function gameLoop(){ 
     draw();
     update();
+    checkCollision(); 
 
     setTimeout(gameLoop, 30); 
 } 
