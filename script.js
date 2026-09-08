@@ -59,6 +59,14 @@ function checkPaddleCollision(ball, paddle){
 } 
 
 
+function adjuctAngle(distanceFromTop, distanceFromBottom){
+    if(distanceFromTop < 0){
+        ySpeed -= 0.5; 
+    }else if(distanceFromBottom < 0){ 
+        ySpeed += 0.5; 
+    } 
+} 
+
 
 function checkCollision(){
     let ball = { 
@@ -84,10 +92,16 @@ function checkCollision(){
     } 
 
     if(checkPaddleCollision(ball, leftPaddle)) { 
+        let distanceFromTop = ball.top - leftPaddle.top; 
+        let distanceFromBottom = ball.bottom - leftPaddle.bottom; 
+        adjuctAngle(distanceFromTop, distanceFromBottom); 
         xSpeed = Math.abs(xSpeed);
     }
 
     if(checkPaddleCollision(ball, rightPaddle)) { 
+        let distanceFromTop = ball.top - rightPaddle.top; 
+        let distanceFromBottom = ball.bottom - rightPaddle.bottom; 
+        adjuctAngle(distanceFromTop, distanceFromBottom); 
         xSpeed = -Math.abs(xSpeed);
     }
 
