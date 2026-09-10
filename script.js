@@ -60,11 +60,15 @@ function checkPaddleCollision(ball, paddle){
 
 
 function adjuctAngle(distanceFromTop, distanceFromBottom){
-    if(distanceFromTop < 0){
+    console.log(`top: ${distanceFromTop}, bottom: ${distanceFromBottom}`)
+    if(distanceFromTop < 5){
+        console.log("Top Hit!");
         ySpeed -= 0.5; 
-    }else if(distanceFromBottom < 0){ 
+    }else if(distanceFromBottom < -5){ 
+        console.log("Bottom Hit!");
         ySpeed += 0.5; 
     } 
+
 } 
 
 
