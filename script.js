@@ -4,10 +4,17 @@ let height = canvas.height;
 let width = canvas.width;
 
 const BALL_SIZE = 5;
-let ballPosition = { x: 20, y: 30}; 
+let ballPosition; 
 
-let xSpeed = 4 
-let ySpeed = 2 
+let xSpeed; 
+let ySpeed;
+
+function initBall(){
+    ballPosition = { x: 20, y: 30}; 
+    xSpeed = 4;
+    ySpeed = 2;
+} 
+
 
 const PADDLE_WIDTH = 5;
 const PADDLE_HEIGHT = 20;
@@ -15,6 +22,9 @@ const PADDLE_OFFSET = 10;
 
 let leftPaddleTop = 10; 
 let rightPaddleTop = 30; 
+
+let leftScore = 0;
+let rightScore = 0; 
 
 document.addEventListener("mousemove", e=>{
     rightPaddleTop = e.y - canvas.offsetTop
@@ -33,14 +43,21 @@ function draw(){
     leftPaddleTop,
     PADDLE_WIDTH,
     PADDLE_HEIGHT
-    ) 
+    );
 
     ctx.fillRect(
     width - PADDLE_OFFSET,
     rightPaddleTop,
     PADDLE_WIDTH,
     PADDLE_HEIGHT
-    ) 
+    );
+    
+    ctx.strokeStyle = "white";
+    ctx.font = "30px monospace"; 
+    ctx.textAlign = "left"; 
+    ctx.strokeText(leftScore.toString(), 50, 50);
+    ctx.textAlign = "right"; 
+    ctx.strokeText(rightScore.toString(), width-50, 50); 
 }
 
 
@@ -109,9 +126,16 @@ function checkCollision(){
         xSpeed = -Math.abs(xSpeed);
     }
 
-    if(ball.left < 0 || ball.right > width){
-    xSpeed = -xSpeed;
+    if(ball.left < 0){
+    rightScore ++;
+    initBall()
     }
+
+    if(ball.right > width){
+    leftScore ++;
+    initBall()
+    }
+
     if(ball.top < 0 || ball.bottom > height){
     ySpeed = -ySpeed;
     }
@@ -126,7 +150,7 @@ function gameLoop(){
     setTimeout(gameLoop, 30); 
 } 
 
-
+initBall();
 gameLoop(); 
 
 
