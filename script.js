@@ -3,6 +3,8 @@ let ctx = canvas.getContext("2d");
 let height = canvas.height;
 let width = canvas.width;
 
+const MAX_COMPUTER_SPEED = 2; 
+
 const BALL_SIZE = 5;
 let ballPosition; 
 
@@ -59,6 +61,24 @@ function draw(){
     ctx.textAlign = "right"; 
     ctx.strokeText(rightScore.toString(), width-50, 50); 
 }
+
+function followBall(){
+    let ball = { 
+    top : ballPosition.y,
+    bottom : ballPosition.y + BALL_SIZE
+    };
+
+    let leftPaddle = { 
+    top: leftPaddleTop,
+    bottom : leftPaddleTop + PADDLE_HEIGHT
+    }; 
+
+    if (leftPaddle.top > ball.top){
+    leftPaddleTop -= MAX_COMPUTER_SPEED;
+    }else if(leftPaddle.bottom < ball.bottom){
+    leftPaddleTop += MAX_COMPUTER_SPEED;
+    }
+} 
 
 
 function update(){
@@ -145,6 +165,7 @@ function checkCollision(){
 function gameLoop(){ 
     draw();
     update();
+    followBall();
     checkCollision(); 
 
     setTimeout(gameLoop, 30); 
